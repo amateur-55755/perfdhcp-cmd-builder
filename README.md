@@ -7,7 +7,7 @@ It understands various kinds of encodings to avoid the need to hand create hex w
 
 **Usage**: In your favorite web browser, open the file "index.html" in the cloned repo.
 
-**Usage Instructions*: 
+**Usage Instructions**: 
 
 This is a simple javascript based web UI for creating a perfdhcp command line. The real purpose here is to make it easier to create the option content.
 It is somewhat difficult to create this content for use in the perfdhcp tool because you have to create the hex yourself.
