@@ -5,7 +5,7 @@ It understands various kinds of encodings to avoid the need to hand create hex w
 
 **Installation**: clone this repo
 
-**Usage**: In your favorite web browser, open the file "index.html" in the cloned repo.
+**Usage**: In your favorite web browser, open the file "index.html" from the cloned repo.
 
 **Usage Instructions**: 
 
