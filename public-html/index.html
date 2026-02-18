@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>perfdhcp command GUI</title>
+<script src="javascript/showRelnotes.js"></script>
+<script src="javascript/GetCMD.js"></script>
+<script src="javascript/copy2clipboard.js"></script>
+<script src="javascript/Validation.js"></script>
+<script src="javascript/typeConversion.js"></script>
+<script src="javascript/guiManipulation.js"></script>
+<link rel="icon" href="favicon.ico" />
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="images/kea-imageonly-64x64.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <form id=main onsubmit="return false;">
+    <!-- Div container of the actual form fields -->
+    <div id=FieldsContainer class=container>
+      Configure the settings as desired then press the "Get CMD" button to receive a command line. 
+      See the <a href=# onclick="showRelnotes('UsageInstructions','UsageInstructionsClose')">Usage Instructions</a> for more.<br><br>
+      <div id=addToMe>
+      <div class=formRow>
+        <div class=FieldLabel>
+          Packet Types (-4/-6)
+        </div>
+        <div class=FieldInput id=ConfTypeSelection>
+          <input type=radio id=ConfType1 name=ConfType value=dhcp4>
+          <label for=ConfType1>DHCPv4</label>
+          <input type=radio id=ConfType2 name=ConfType value=dhcp6>
+          <label for=ConfType2>DHCPv6</label>
+        </div>
+        <div class=FieldDescription>
+          The type of packets `perfdhcp` will send
+        </div>
+      </div>
+
+      <div class=formRow>
+        <div class=FieldLabel>
+          <label for=rate>rate (-r)</label>
+        </div>
+        <div class=FieldInput>
+          <input type="number" id="rate" name="rate" min="1" step="1" placeholder='e.g., 1' oninput="validatePositiveInteger(this)">
+        </div>
+        <div class=FieldDescription>
+          The number of packets per second that `perfdhcp` will send
+        </div>
+      </div>
+
+
+      <div class=formRow>
+        <div class=FieldLabel>
+          <label for=SimulateClientCount>Client Count (-R)</label>
+        </div>
+        <div class=FieldInput>
+          <input type="number" id="SimulateClientCount" name="SimulateClientCount" min="1" step="1" placeholder='e.g., 1' oninput="validatePositiveInteger(this)">
+        </div>
+        <div class=FieldDescription>
+          The number of clients `perfdhcp` should simulate
+        </div>
+      </div>
+
+
+      <div class=formRow>
+        <div class=FieldLabel>
+          <label for=period>Test period (-p)</label>
+        </div>
+        <div class=FieldInput>
+          <input type="number" id="period" name="period" min="1" step="1" placeholder='e.g., 3600' oninput="validatePositiveInteger(this)">
+        </div>
+        <div class=FieldDescription>
+          The number of seconds for which `perfdhcp` should send packets
+        </div>
+      </div>
+
+      <div class=formRow>
+        <div class=FieldLabel>
+          <label for=outageStart>Delay Outage Start (-Y)</label>
+        </div>
+        <div class=FieldInput id=OutageStartDiv>
+          <input type="number" id="outageStart" name="outageStart" min="1" step="1" placeholder='e.g., 1' oninput="validatePositiveInteger(this)">
+        </div>
+        <div class=FieldDescription>
+          The seconds delay  after which `perfdhcp` should start increasing the SECS field (dhcp4) or the elapsed seconds option (dhcp6)
+        </div>
+      </div>
+
+
+      <div class=formRow>
+        <div class=FieldLabel>
+          <label for=outageDuration>Outage Duration (-y)</label>
+        </div>
+        <div class=FieldInput id=outageDurationDiv>
+          <input type="number" id="outageDuration" name="outageDuration" min="1" step="1" placeholder='e.g., 3600' oninput="validatePositiveInteger(this)">
+        </div>
+        <div class=FieldDescription>
+          The seconds duration during which `perfdhcp` shall increase the SECS field (dhcp4) or the elapsed seconds option (dhcp6)
+        </div>
+      </div>
+
+      <div class=formRow>
+        <div class=FieldLabel>
+          <label for=dhcp6relayHop>DHCP6 Relay hops (-A 1)</label>
+        </div>
+        <div class=FieldInput id=dhcp6relayHopDiv>
+          <input type="checkbox" id="dhcp6relayHop" name="dhcp6relayHop" value="1">
+        </div>
+        <div class=FieldDescription>
+          Relay hops (the only valid value is "1" and so this is a checkbox)<br>
+          <b>Note:</b> Requires DHCPv6 and a dhcp6 address in "Send from/to"
+        </div>
+      </div>
+
+      <div class=formRow>
+        <div class=FieldLabel>
+          <label for=WhereHowToSend>Send from/to</label>
+        </div>
+        <div class=FieldInput id=WhereHowToSendDiv>
+          <input type="text" id="WhereHowToSend" name="WhereHowToSend" placeholder='e.g., "ens19" or "10.0.0.1"'>
+        </div>
+        <div class=FieldDescription>
+          The interface (broadcast/multicast source) or IP address (destination simulating relay) to which `perfdhcp` should direct the packets
+        </div>
+      </div>
+      </div>  
+      <button type=button onclick="moreOption()">Add -o option</button>
+      <button type=button onclick="moreOption82()">Add -o 82,... option</button>
+      <button type=button onclick="moreRelay6option()">Add --or Relay6 option</button><br><br>
+      <button type=button onclick="GetCMD()">Get CMD</button>
+      <br><br><br>
+    </div>
+    <!-- Div container for the generated `perfdhcp` command line output -->
+    <div id=CommandOutput>
+      <div id=CommandOutputContainer>
+        <div id=CommandOutputCopy><a href=# onclick="copy2clipboard('main','CommandOutputCopy');"><b><font size=5px>&#x2398;</font></b> COPY</a>
+        </div>
+        <textarea id=CommandOutputTA placeholder='Choose some things and press some buttons and a command will appear here'></textarea>
+      </div>
+    </div>
+
+    <!-- Usage instructions -->
+    <div id='UsageInstructions'><br><br>
+      This is a simple javascript based web UI for creating a perfdhcp command line.  The real purpose here is to make it easier to create the option content.
+      It is somewhat difficult to create this content for use in the perfdhcp tool because you have to create the hex yourself.  This software will accept
+      various string content with a specification of what type of content it is.  When 'Get CMD' is pressed, a valid command line will appear in the gray box
+      at the bottom of the screen.  Note that very little validation is performed, so garbage in, garbage out. Though the command should not cause complaint
+      from `perfdhcp`, it is possible to create content that won't work with the DHCP server.<br><br>
+      <b><u>Tips:</u></b><br>
+      <ul>
+        <li>It is required to choose DHCPv4 or DHcPv6</li>
+        <li>It is recommended to at least chose a rate or packets will be flung with reckless abandon</li>
+        <li>The outage simulation flags (-Y and -y) are meant to provide a simulation of clients that have not received an answer in some seconds which is probably
+            only useful in the case that you are trying to test an HA relationship and need to simulate unacked clients.</li>
+        <li>the DHCP6 flag `-A 1` simulates a number of hops that relayed the DHCPv6 traffic (currently, perfdhcp only supports one hop)</li>
+        <li>The fun part is here (`-o` option)! Click "Add -o option", "Add -o 82,... option", or "Add --or Relay6 option" to add an option of each type.</li>
+        <li>This is where the magic is.  Add the option id in the first small field.  If the chosen option does not consist of multiple parts, then just choose 
+            the type and add the string.</li>
+        <li>If multiple parts are required (e.g., DHCPv4 option 81 (see: <a href=https://datatracker.ietf.org/doc/html/rfc4702 target=_new>RFC 4702</a>)
+            which has several parts), click the "Add Part" button to add another part, choose the type and enter the string.  Clicking the "Get CMD"
+            button will cause these to be converted to hex using their respective types.  They will be concatonated together into a single option.
+            This is a real time-saver for those of us who need to use this command a lot.  You still need to understand the content of the option, but
+            you are saved from converting it yourself.</li>
+        <li><b><u>Option 82 (-o 82)</u></b> sub-option id will be taken from the id entered in the first field.</li>
+        <li><b><u>DHCP6 Relay Options (--or)</u></b> will always be added at relay encapsulation level 1.  If -A 1 isn't checked, it is inferred from the presence 
+            of this option.  The option code will be taken from the code field.</li>
+        <li>For a flags field, these are usually a single octet (8 bits).  Choose the type "binary" and then place the bits as they should be (e.g., option 81 Flags field 
+            of |MBZ|N|E|O|S| where you might want to send a "1" in the "E" field would be 00000100 in the text input field with "binary" chosen for the type).</li>
+        <li><b><u>Option example:</u></b> An example of adding a multi-part option would be the aforementioned option 81.  This option consists of multiple parts: 
+            |Flags|RCODE1|RCODE2||Domain name| Let us assume that you are wanting to send an RFC 1035 encoded domain name in option 81 so you need to set the "E" bit.
+            This was mentioned above, of course.  Steps: Click "Add -o Option".  Enter 81 in the code field. Enter "00000100" in the data field.  Choose "binary" for the type.  
+            This completes the Flags part. Click "Add Part".  Enter "0" and choose "unit8" for the type which completes RCODE1. Click "Add Part".  Enter "0" and choose 
+            "unit8" for the type which completes RCODE2. Click "Add Part".  Enter the domain name (e.g., "www.example.org") and choose "fqdn" for the type.  That is it!  If 
+            you had, instead, wanted to send the string style domain name, you would have entered all 0's for the Flags, and chosen "string" for the type on the actual
+            domain name.</li> 
+      </ul>
+      That is it!  Hopefully you have as much fun using this software as I had writing it :)
+    </div>
+    <div id='UsageInstructionsClose'>
+      <a class=ANOSTYLE href=# onclick="showRelnotes('UsageInstructions','UsageInstructionsClose')">
+        <img src=images/close-button-png-30231.png border=0 width=30 height=30>
+      </a>
+    </div>
+
+    <!-- Version info (clicking it shows release notes) in the lower right corner -->
+    <div id=VersionInfo class=test>perfdhcp cmd maker version: <a href=# onclick="showRelnotes('VersionPortal','VersionPortalClose')">0.1</a>
+    </div>
+    <!-- The actual display of the release notes -->
+    <div id=VersionPortal>
+      <pre><object data="relnotes.txt"></object></pre>
+    </div>
+    <!-- The close button that floats on the release notes box -->
+    <div id=VersionPortalClose>
+      <a class=ANOSTYLE href=# onclick="showRelnotes('VersionPortal','VersionPortalClose')">
+        <img src=images/close-button-png-30231.png border=0 width=30 height=30>
+      </a>
+    </div>
+    <!-- The kea logo in the lower right! -->
+    <div id=KeaLogoDiv>
+      <a class=ANOSTYLE href=https://www.isc.org/kea/ target=_new>
+        <img src=images/Kea-Complete-Logo.png width=50 height=50 border=0>
+      </a>
+    </div>
+  </form>
+  <div id=ErrorMessageDiv>
+  </div>
+  <div id='ErrorMessageDivClose'>
+    <a class=ANOSTYLE href=# onclick="showRelnotes('ErrorMessageDiv','ErrorMessageDivClose')">
+      <img src=images/close-button-png-30231.png border=0 width=30 height=30>
+    </a>
+  </div>
+</body>
+<html>
