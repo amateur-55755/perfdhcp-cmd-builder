@@ -1,0 +1,252 @@
+/* Use this style.css file to create a nice looking page
+   as per usual HTML standards. */
+
+html, body {
+  /* body */
+  height:100%;
+}
+
+/* div styles */
+#ErrorMessageDiv {
+  /* the div that contains the error message - only shown if needed */
+  border: 0px solid #73AD21;
+  background-color: red;
+  position: fixed;
+  z-index:  94;
+  left: 5%;
+  top: 5%;
+  width: 20%; 
+  padding: 20px;
+  color: white;
+  font-weight: 900;
+  text-shadow: 2px 2px 0px black;
+  display: none;
+}
+#ErrorMessageDivClose {
+  position: fixed;
+  z-index:  95;
+  top:      5%;  
+  left:     25%;
+  width:    30;
+  height:   30;
+  display:  none;
+}
+
+div.buttonContainer {
+  width: 90%;
+  overflow: auto;
+  height: 85vh;
+}
+div.container div.formRow {
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+div.container div.formRow:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+div.formRow {
+  /* div that contains a row of label - form field - description */
+  width: 95%;
+  border-radius: 5px;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 1.5fr 3fr 6fr;
+  gap: 20px;
+  padding: 4px;
+}
+
+div.FieldLabel {
+}
+
+div.FieldInput {
+}
+
+div.FieldDescription {
+}
+
+#FieldsContainer {
+  /* The div that contains the fields that will collect the input */
+  height: 85vh;
+  width: 90%;
+  overflow: auto;
+}
+#CommandOutput {
+  /* The div that contains the textarea that shows the perfdhcp command */
+  display:  block;
+  position: fixed;
+  bottom:   0;
+  left:     5%;
+  height: 13vh;
+  width: 90%;
+  border: 0px solid #73AD21;
+  background-color: white;
+  padding: 10px;
+}
+#CommandOutputContainer {
+  width: 90%;
+  background-color: #dedede
+}
+#CommandOutputCopy {
+  /* The copy symbol that allows copying of the content from the output*/
+  width: 99%;
+  text-align: right;
+}
+
+
+#UsageInstructions {
+  /* The usage instructions div container */
+  position: fixed;
+  z-index:  96;  
+  top:      10%;  
+  left:     10%;  
+  width:    80%;
+  height:   80%;
+  border:   1px solid #73AD21;
+  overflow: auto;
+  display:  none;
+  padding:  10px;
+  background-color: white;
+}
+
+#UsageInstructionsClose {
+  position: fixed;
+  z-index:  97;
+  top:      10%;  
+  left:     89%;
+  width:    30;
+  height:   30;
+  display:  none;
+}
+
+#VersionInfo {
+  /* The version info box shown at bottom left */
+  display:  block;
+  position: fixed;
+  bottom:   0;
+  left:     0;
+  border: 1px solid #73AD21;
+  background-color: white;
+}
+
+#VersionPortal {
+  /* The release notes view shown after clicking version number */
+  position: fixed;
+  z-index:  98;  
+  top:      50%;  
+  left:     50%;  
+  margin:   -220px 0 0 -320px;  
+  width:    620px;  
+  height:   420px;
+  border:   1px solid #73AD21;
+  overflow: auto;
+  display:  none;
+  padding:  10px;
+  background-color: white;
+}
+
+#VersionPortalClose {
+  /* The X that closes the release notes view */
+  position: fixed;
+  z-index:  99;
+  width:    30;
+  height:   30;
+  top:      50%;
+  left:     50%;
+  display:  none;
+  margin:   -240px 0 0 300px;
+}
+
+#VersionPortal object {
+/*  width: 100%;
+  height: 90%;*/
+  width:  600px;
+  height: 390px;
+  border: none;
+  background-color: white;
+}
+
+#KeaLogoDiv {
+  /* The container that shows the kea logo in the bottom right corner */
+  display:  block;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+}
+
+div {
+  /* basic div styling for all divs */
+  position: relative;
+  font-family: sans-serif, Sans-Serif;
+}
+/* end div styles */
+
+/* link styles */
+a:link, a:visited {
+  /* link styling */
+  background-color: #dedede;
+  color: black;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  /* link styling for currently hover or clicking links */
+  background-color: #73AD21;
+  color: white;
+}
+
+a.ANOSTYLE {
+  /* Links with no style for image links */
+  background-color: initial;
+}
+/* end link styles */
+
+/* form field styles */
+button {
+  /* button styling */
+  background-color: #dedede;
+  color: black;
+  padding: 5px 5px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid black;
+  box-shadow: 3px 3px black, 2px 2px black, 1px 1px black;
+}
+
+button:hover {
+  /* button styling on hover */
+  background-color: #73AD21;
+  box-shadow: 3px 3px #476b14, 2px 2px #476b14, 1px 1px #476b14;
+  color: white;
+}
+
+button:active {
+  /* clicked button styling (nice 3D effect) */
+  box-shadow: 1px 1px #476b14, 0px 0px #476b14, 0px 0px #476b14;
+  translate: 2px 2px 2px;
+}
+
+button:disabled {
+  /* disabled buttons grayed out and already look clicked */
+  background-color: #f2f2f2;
+  translate: 2px 2px 2px;
+  box-shadow: 1px 1px black, 0px 0px black, 0px 0px black;
+  color: #cccccc;
+  cursor: default;
+}
+
+#CommandOutputTA {
+  /* The styling of the textarea that floats at the bottom of the page which contains the perfdhcp command */
+  width:  99%;
+  height: 50px;
+  resize: none;
+  border: 0px solid black;
+  background-color: #dedede;
+}
+/* End form field styles */
