@@ -1,4 +1,4 @@
-# perfdhcp-CMD-GUI
+# perfdhcp-cmd-builder
 
 A javascript self-contained (open file in browser) GUI front end to create a perfdhcp command line.
 It understands various kinds of encodings to avoid the need to hand create hex when testing with perfdhcp.
